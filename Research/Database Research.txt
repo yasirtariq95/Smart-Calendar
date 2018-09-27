@@ -1,0 +1,9 @@
+Database Research Summary: Seeing if this Amazon RDS can easily integrate with Java or not before working on it.
+
+It's not a simple add/create/delete tables from the Amazon RDS itself like your average database, it uses mySQL but it's not simple and easy to use like mySQL Workbench.
+
+Researching on giving access to RDS to other team members while making it inaccessible to the public so our whole network isn't taken down. (If people can access our Database they can essentially corrupt our whole software itself)
+
+So far we've been able to access the RDS through private credentials using Linux/Virtual Box so that makes the security of our software secured.
+
+There is been some work done to integrate RDS to our Java file using the J-Connector: https://dev.mysql.com/downloads/connector/j/
