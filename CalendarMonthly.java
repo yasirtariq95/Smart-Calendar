@@ -13,15 +13,6 @@ public class CalendarMonthly extends JFrame {
 	JPanel p1 = new JPanel(new GridLayout(7, 7));
 	int month = Calendar.getInstance().get(Calendar.MONTH);
 
-    int year = Calendar.getInstance().get(Calendar.YEAR);
-
-    JLabel l = new JLabel("", JLabel.CENTER);
-
-    String day = "";
-
-    JDialog d;
-
-
 	CalendarMonthly() {
 		getContentPane().setBackground(new Color(204, 204, 255));
 		getContentPane().setFont(new Font("Berlin Sans FB", Font.PLAIN, 11));
@@ -30,7 +21,6 @@ public class CalendarMonthly extends JFrame {
 		this.setTitle("Personal Calendar");
 		this.setSize(1000,800);
 		this.setVisible(true);
-
 
 		String [] columns = {"Sunday","Monday","Tueday","Wednesday","Thursday","Friday","Saturday"};
 		model = new DefaultTableModel(null,columns);
@@ -45,25 +35,26 @@ public class CalendarMonthly extends JFrame {
 		monthLabel.setFont(new Font("Berlin Sans FB", Font.PLAIN, 30));
 		monthLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
+		
 		JTable table = new JTable(model);
 		JScrollPane pane = new JScrollPane(table);
 		pane.setBounds(60, 111, 854, 474);
 		getContentPane().add(pane);
-		
 		table.setEnabled(false);
 		table.setSurrendersFocusOnKeystroke(true);
 		table.setIntercellSpacing(new Dimension(1, 1));
 		table.setFillsViewportHeight(true);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setFont(new Font("Berlin Sans FB", Font.PLAIN, 14));
-		
 		table.setRowHeight(75);
 
+		
 		JButton prevMonth = new JButton("<<");
 		prevMonth.setBounds(59, 58, 56, 29);
 		getContentPane().add(prevMonth);
 		prevMonth.setFont(new Font("Berlin Sans FB", Font.PLAIN, 18));
 
+		
 		JButton nextMonth = new JButton(">>");
 		nextMonth.setBounds(848, 58, 66, 29);
 		getContentPane().add(nextMonth);
@@ -103,14 +94,12 @@ public class CalendarMonthly extends JFrame {
 		for(int day = 1; day <= numberOfDays; day++){
 			model.setValueAt(day, i/7 , i%7 );    
 			i++;
-	}
-	
-     }
-
-
-		public static void main(String[] arg) {
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			CalendarMonthly monthly = new CalendarMonthly();
-
 		}
 	}
+
+	public static void main(String[] arg) {
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		CalendarMonthly monthly = new CalendarMonthly();
+	}
+	
+}
