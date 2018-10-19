@@ -5,9 +5,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.GroupLayout;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -52,6 +58,34 @@ public class CalendarLogin extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
+                    
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    String uname = jTextField1.getText();
+                    String pass = String.valueOf(jPasswordField1.getPassword());
+                    
+                    String query = "SELECT * FROM Registration WHERE userid = ? AND password = ?";
+                    
+                    try {
+                            ps = dbconnection.getConnection().prepareStatement(query);
+            
+                            ps.setString(1, uname);
+                            ps.setString(2, pass);
+                            
+                            rs = ps.executeQuery();
+                            
+                            if (rs.next())
+                            {
+                                JOptionPane.showMessageDialog(null, "Welcome To Your Calendar!");
+                            }
+                            else
+                            {
+                                JOptionPane.showMessageDialog(null, "Incorrect Username & Password!");
+                            }
+                    }catch (SQLException ex) {
+                        Logger.getLogger(CalendarRegistration.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
         	}
         });
         jLabelRegister = new javax.swing.JLabel();
