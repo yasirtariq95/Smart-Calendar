@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="lib" path="C:/Users/George/OneDrive/Documents/Calendar Application/CSC4350-Calendar/mysql-connector-java-8.0.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/George/OneDrive/Documents/Calendar Application/CSC4350-Calendar/owm-japis-2.5.2.3.jar"/>
+	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
+    <classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
+    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+    <classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
+    <classpathentry kind="output" path="target/classes"/>
+</classpath>

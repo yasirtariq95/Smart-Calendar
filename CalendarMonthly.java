@@ -1,5 +1,3 @@
-package calendar;
-
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -16,7 +14,6 @@ public class CalendarMonthly {
 	int year = Calendar.getInstance().get(Calendar.YEAR);
 	private JFrame frame;
 
-	
 	/**
 	 * Launch the application.
 	 */
@@ -32,8 +29,7 @@ public class CalendarMonthly {
 			}
 		});
 	}
-	
-	
+
 	/**
 	 * Create the application.
 	 */
@@ -41,7 +37,6 @@ public class CalendarMonthly {
 		initialize();
 	}
 
-	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -52,11 +47,11 @@ public class CalendarMonthly {
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Personal Calendar");
-		frame.setSize(1000,700);
+		frame.setSize(1000, 700);
 		frame.setVisible(true);
 
-		String [] columns = {"Sunday","Monday","Tueday","Wednesday","Thursday","Friday","Saturday"};
-		model = new DefaultTableModel(null,columns);
+		String[] columns = { "Sunday", "Monday", "Tueday", "Wednesday", "Thursday", "Friday", "Saturday" };
+		model = new DefaultTableModel(null, columns);
 		frame.getContentPane().setLayout(null);
 
 		monthLabel = new JLabel();
@@ -71,15 +66,14 @@ public class CalendarMonthly {
 		p1.setBounds(94, 121, 788, 350);
 		frame.getContentPane().add(p1);
 
-		for(int x = 0; x < dayButton.length; x++){
+		for (int x = 0; x < dayButton.length; x++) {
 
 			dayButton[x] = new JButton();
 
 			dayButton[x].setFocusPainted(false);
 			dayButton[x].setBackground(Color.white);
 
-			if(x < 7)
-			{
+			if (x < 7) {
 				dayButton[x].setText(columns[x]);
 				dayButton[x].setBackground(Color.LIGHT_GRAY);
 			}
@@ -112,7 +106,7 @@ public class CalendarMonthly {
 		});
 
 		this.updateMonth();
-		
+
 		JButton addEvent = new JButton("+");
 		addEvent.setBounds(856, 18, 42, 27);
 		addEvent.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
@@ -144,31 +138,27 @@ public class CalendarMonthly {
 		chckbxDaily.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
 		frame.getContentPane().add(chckbxDaily);
 
-		/*JComboBox comboBoxContacts = new JComboBox();
-		comboBoxContacts.setBounds(10, 21, 113, 22);
-		comboBoxContacts.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		comboBoxContacts.setEditable(true);
-		comboBoxContacts.setFont(new Font("Berlin Sans FB", Font.PLAIN, 14));
-		frame.getContentPane().add(comboBoxContacts);
-		
-
-		JLabel lblContact = new JLabel("Contacts");
-		lblContact.setBounds(128, 15, 78, 30);
-		lblContact.setLabelFor(comboBoxContacts);
-		lblContact.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
-		frame.getContentPane().add(lblContact);
-		*/
+		/*
+		 * JComboBox comboBoxContacts = new JComboBox(); comboBoxContacts.setBounds(10,
+		 * 21, 113, 22); comboBoxContacts.addActionListener(new ActionListener() {
+		 * public void actionPerformed(ActionEvent arg0) { } });
+		 * comboBoxContacts.setEditable(true); comboBoxContacts.setFont(new
+		 * Font("Berlin Sans FB", Font.PLAIN, 14));
+		 * frame.getContentPane().add(comboBoxContacts);
+		 * 
+		 * 
+		 * JLabel lblContact = new JLabel("Contacts"); lblContact.setBounds(128, 15, 78,
+		 * 30); lblContact.setLabelFor(comboBoxContacts); lblContact.setFont(new
+		 * Font("Berlin Sans FB", Font.PLAIN, 20));
+		 * frame.getContentPane().add(lblContact);
+		 */
 	}
 
-
-	void updateMonth() {	
+	void updateMonth() {
 		int year = cal.get(Calendar.YEAR);
 		monthLabel.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " " + year);
 
-		for(int x = 7; x < dayButton.length; x++) {
+		for (int x = 7; x < dayButton.length; x++) {
 			dayButton[x].setText("");
 		}
 
@@ -178,7 +168,7 @@ public class CalendarMonthly {
 		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 		int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-		for(int x = 6+ dayOfWeek, day = 1; day <= daysInMonth; x++, day++){
+		for (int x = 6 + dayOfWeek, day = 1; day <= daysInMonth; x++, day++) {
 			dayButton[x].setText("" + day);
 			dayButton[x].setBackground(Color.white);
 		}
