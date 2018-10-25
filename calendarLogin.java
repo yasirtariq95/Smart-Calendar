@@ -77,6 +77,8 @@ public class CalendarLogin extends javax.swing.JFrame {
                             if (rs.next())
                             {
                                 JOptionPane.showMessageDialog(null, "Welcome To Your Calendar!");
+                                CalendarMonthly monthly = new CalendarMonthly();
+                                monthly.CalendarMonthly();
                             }
                             else
                             {
