@@ -1,5 +1,3 @@
-package calendar;
-
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -20,7 +18,7 @@ public class CalendarMonthly {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] arg) {
+	public static void CalendarMonthly() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -118,6 +116,8 @@ public class CalendarMonthly {
 		addEvent.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
 		addEvent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				AddEvent addEvent = new AddEvent();
+				addEvent.AddEvent();
 			}
 		});
 		frame.getContentPane().add(addEvent);
