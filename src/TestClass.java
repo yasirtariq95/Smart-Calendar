@@ -1,23 +1,18 @@
 import net.aksingh.owmjapis.core.OWM;
 import net.aksingh.owmjapis.api.APIException;
-import net.aksingh.owmjapis.model.CurrentWeather;
+//import net.aksingh.owmjapis.model.CurrentWeather;
+import net.aksingh.owmjapis.model.HourlyWeatherForecast;
+import net.aksingh.owmjapis.model.param.WeatherData;
 
 public class TestClass {
-	public static void main(String[] args) {
-		System.out.println("FUCK");
-		throws APIException {
+	public static void main(String args[]) throws APIException {
+	    OWM owm = new OWM("4aabea27c4cde244047df5dac05c26e2");
+	    HourlyWeatherForecast hwd = owm.hourlyWeatherForecastByCityName("London");
 
-	        // declaring object of "OWM" class
-	        OWM owm = new OWM("4aabea27c4cde244047df5dac05c26e2");
+	    System.out.println("City: " + hwd.getCityData().getName());
 
-	        // getting current weather data for the "London" city
-	        CurrentWeather cwd = owm.currentWeatherByCityName("London");
-
-	        //printing city name from the retrieved data
-	        System.out.println("City: " + cwd.getCityName());
-
-	        // printing the max./min. temperature
-	        System.out.println("Temperature: " + cwd.getMainData().getTempMax() + "/" + cwd.getMainData().getTempMin() + "\'K");
+	    for (WeatherData data: hwd.getDataList()) {
+	      System.out.println("Data datetime: " + data.getDateTime());
 	    }
-	}
+	  }
 }
