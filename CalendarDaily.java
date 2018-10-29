@@ -23,8 +23,6 @@ import javax.swing.ListSelectionModel;
 public class CalendarDaily {
 	DefaultTableModel model;
 	Calendar cal = new GregorianCalendar();
-	JButton[] dayButton = new JButton[24];
-	JPanel p1 = new JPanel(new GridLayout(24, 1));
 	JLabel dayLabel;
 	int day = Calendar.getInstance().get(Calendar.DATE);
 
@@ -65,11 +63,11 @@ public class CalendarDaily {
 		frame.setSize(1000,700);
 		frame.setVisible(true);
 
-		
+
 		String [] columns = {"Time" ,"Events"};
 		String [][] rows = {{"12 am"},{ "1 am"}, {"2 am"}, {"3 am"}, {"4 am"}, {"5 am"}, {"6 am"}, {"7 am"}, {"8 am"}, {"9 am"}, {"10 am"}, {"11 am"},
 				{"12 pm"},{ "1 pm"}, {"2 pm"}, {"3 pm"}, {"4 pm"}, {"5 pm"}, {"6 pm"}, {"7 pm"}, {"8 pm"}, {"9 pm"}, {"10 pm"}, {"11 pm"}
-							};
+		};
 
 		model = new DefaultTableModel(rows,columns);
 		JTable table = new JTable(model);
@@ -88,7 +86,7 @@ public class CalendarDaily {
 		frame.getContentPane().setLayout(null);
 
 		dayLabel = new JLabel();
-		dayLabel.setBounds(338, 56, 283, 27);
+		dayLabel.setBounds(277, 56, 380, 27);
 		dayLabel.setBackground(Color.BLACK);
 		dayLabel.setForeground(Color.BLACK);
 		frame.getContentPane().add(dayLabel);
@@ -163,14 +161,16 @@ public class CalendarDaily {
 
 	private void updateDay() {
 		int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		
+		int year = cal.get(Calendar.YEAR);
+
 		if (day <= 0 ){
 			day = daysInMonth;
 		}else if (day > daysInMonth){
 			day = 1;
 		}
 
-		dayLabel.setText(cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US) + " " + day);
-
+		dayLabel.setText(cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US) + ", " + 
+				cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " " + day + ", " + year);
 	}
+
 }
