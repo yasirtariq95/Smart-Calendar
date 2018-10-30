@@ -16,3 +16,13 @@ public class TestClass {
 	    }
 	  }
 }
+/*
+https://stackoverflow.com/questions/43425367/mapdb-classnotfoundexception-kotlin-jvm-internal-intrinsics#44734211
+https://maven.apache.org/plugins/maven-assembly-plugin/
+https://maven.apache.org/plugins/index.html
+https://stackoverflow.com/questions/6079253/running-maven-exec-plugin-inside-eclipse#6083254
+https://bitbucket.org/aksinghnet/owm-japis/src
+https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/index.html
+https://kotlinlang.org/api/latest/jvm/stdlib/index.html
+https://discuss.kotlinlang.org/t/kotlin-jar-being-called-by-java-application-kotlin-jvm-internal-intrinsics/9054
+*/
