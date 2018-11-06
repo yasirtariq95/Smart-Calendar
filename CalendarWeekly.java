@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -60,7 +62,6 @@ public class CalendarWeekly {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(204, 204, 255));
 		frame.getContentPane().setFont(new Font("Berlin Sans FB", Font.PLAIN, 11));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Personal Calendar");
 		frame.setSize(1000,700);
 		frame.setVisible(true);
@@ -140,11 +141,19 @@ public class CalendarWeekly {
 
 		JCheckBox chckbxMonthly = new JCheckBox("Monthly");
 		chckbxMonthly.setBounds(60, 601, 97, 38);
-		chckbxMonthly.setSelected(true);
 		chckbxMonthly.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
 		frame.getContentPane().add(chckbxMonthly);
+		chckbxMonthly.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					CalendarMonthly monthly = new CalendarMonthly();
+					monthly.CalendarMonthly();
+				};
+			}
+		});
 
 		JCheckBox chckbxWeekly = new JCheckBox("Weekly");
+		chckbxWeekly.setSelected(true);
 		chckbxWeekly.setBounds(462, 601, 97, 38);
 		chckbxWeekly.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
 		frame.getContentPane().add(chckbxWeekly);
@@ -153,6 +162,14 @@ public class CalendarWeekly {
 		chckbxDaily.setBounds(845, 601, 69, 38);
 		chckbxDaily.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
 		frame.getContentPane().add(chckbxDaily);
+		chckbxDaily.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					CalendarDaily daily = new CalendarDaily();
+					daily.CalendarDaily();
+				};
+			}
+		});
 	}
 
 	void updateWeek() {	
@@ -176,6 +193,11 @@ public class CalendarWeekly {
 
 		model.setRowCount(0);
 
+	}
+
+	public void CalendarWeekly() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
