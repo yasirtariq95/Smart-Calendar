@@ -5,7 +5,6 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 public class CalendarMonthly {
-	DefaultTableModel model;
 	Calendar cal = new GregorianCalendar();
 	JLabel monthLabel;
 	JButton[] dayButton = new JButton[49];
@@ -13,12 +12,13 @@ public class CalendarMonthly {
 	int month = Calendar.getInstance().get(Calendar.MONTH);
 	int year = Calendar.getInstance().get(Calendar.YEAR);
 	private JFrame frame;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
-	
+
 	/**
 	 * Launch the application.
 	 */
-	public static void CalendarMonthly() {
+	public static void main(String[]args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -30,8 +30,8 @@ public class CalendarMonthly {
 			}
 		});
 	}
-	
-	
+
+
 	/**
 	 * Create the application.
 	 */
@@ -39,7 +39,7 @@ public class CalendarMonthly {
 		initialize();
 	}
 
-	
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -54,7 +54,6 @@ public class CalendarMonthly {
 		frame.setVisible(true);
 
 		String [] columns = {"Sunday","Monday","Tueday","Wednesday","Thursday","Friday","Saturday"};
-		model = new DefaultTableModel(null,columns);
 		frame.getContentPane().setLayout(null);
 
 		monthLabel = new JLabel();
@@ -110,7 +109,7 @@ public class CalendarMonthly {
 		});
 
 		this.updateMonth();
-		
+
 		JButton addEvent = new JButton("+");
 		addEvent.setBounds(856, 18, 42, 27);
 		addEvent.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
@@ -129,38 +128,42 @@ public class CalendarMonthly {
 		frame.getContentPane().add(lblEvents);
 
 		JCheckBox chckbxMonthly = new JCheckBox("Monthly");
+		buttonGroup.add(chckbxMonthly);
 		chckbxMonthly.setBounds(60, 601, 97, 38);
 		chckbxMonthly.setSelected(true);
 		chckbxMonthly.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
 		frame.getContentPane().add(chckbxMonthly);
+		
 
 		JCheckBox chckbxWeekly = new JCheckBox("Weekly");
+		buttonGroup.add(chckbxWeekly);
 		chckbxWeekly.setBounds(462, 601, 97, 38);
 		chckbxWeekly.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
 		frame.getContentPane().add(chckbxWeekly);
+		chckbxWeekly.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					CalendarWeekly weekly = new CalendarWeekly();
+					weekly.CalendarWeekly();
+				};
+			}
+		});
+		
 
 		JCheckBox chckbxDaily = new JCheckBox("Daily");
+		buttonGroup.add(chckbxDaily);
 		chckbxDaily.setBounds(845, 601, 69, 38);
 		chckbxDaily.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
 		frame.getContentPane().add(chckbxDaily);
-
-		/*JComboBox comboBoxContacts = new JComboBox();
-		comboBoxContacts.setBounds(10, 21, 113, 22);
-		comboBoxContacts.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		chckbxDaily.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					CalendarDaily daily = new CalendarDaily();
+					daily.CalendarDaily();
+				};
 			}
 		});
-		comboBoxContacts.setEditable(true);
-		comboBoxContacts.setFont(new Font("Berlin Sans FB", Font.PLAIN, 14));
-		frame.getContentPane().add(comboBoxContacts);
-		
 
-		JLabel lblContact = new JLabel("Contacts");
-		lblContact.setBounds(128, 15, 78, 30);
-		lblContact.setLabelFor(comboBoxContacts);
-		lblContact.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
-		frame.getContentPane().add(lblContact);
-		*/
 	}
 
 
@@ -182,5 +185,11 @@ public class CalendarMonthly {
 			dayButton[x].setText("" + day);
 			dayButton[x].setBackground(Color.white);
 		}
+	}
+
+
+	public void CalendarMonthly() {
+		// TODO Auto-generated method stub
+		
 	}
 }
