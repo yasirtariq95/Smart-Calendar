@@ -28,7 +28,7 @@ public class CalendarWeekly {
 	int week = Calendar.getInstance().get(Calendar.WEEK_OF_MONTH);
 	JPanel p1 = new JPanel(new GridLayout(7, 7));
 	private JFrame frame;
-	
+
 
 	/**
 	 * Launch the application.
@@ -64,11 +64,11 @@ public class CalendarWeekly {
 		frame.setTitle("Personal Calendar");
 		frame.setSize(1000,700);
 		frame.setVisible(true);
-		
+
 		String [] columns = {"Sunday","Monday","Tueday","Wednesday","Thursday","Friday","Saturday"};
 		model = new DefaultTableModel(null,columns);
 		frame.getContentPane().setLayout(null);
-		
+
 
 		weekLabel = new JLabel();
 		weekLabel.setBounds(146, 56, 692, 27);
@@ -77,12 +77,12 @@ public class CalendarWeekly {
 		frame.getContentPane().add(weekLabel);
 		weekLabel.setFont(new Font("Berlin Sans FB", Font.PLAIN, 30));
 		weekLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		JTable table = new JTable(model);
 		JScrollPane pane = new JScrollPane(table);
 		pane.setBounds(94, 121, 788, 350);
 		frame.getContentPane().add(pane);
-		
+
 		table.setEnabled(false);
 		table.setSurrendersFocusOnKeystroke(true);
 		table.setIntercellSpacing(new Dimension(1, 1));
@@ -94,7 +94,7 @@ public class CalendarWeekly {
 		JPanel p1 = new JPanel(new GridLayout(7, 7));
 		p1.setBounds(94, 121, 788, 350);
 		frame.getContentPane().add(p1);
-		
+
 		JButton prevMonth = new JButton("<<");
 		prevMonth.setBounds(59, 58, 56, 29);
 		frame.getContentPane().add(prevMonth);
@@ -120,7 +120,7 @@ public class CalendarWeekly {
 		});
 
 		this.updateWeek();
-		
+
 		JButton addEvent = new JButton("+");
 		addEvent.setBounds(856, 18, 42, 27);
 		addEvent.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
@@ -154,19 +154,28 @@ public class CalendarWeekly {
 		chckbxDaily.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
 		frame.getContentPane().add(chckbxDaily);
 	}
-		
+
 	void updateWeek() {	
-		//int month = cal.get(Calendar.MONTH);
 		int year = cal.get(Calendar.YEAR);
 		int day = cal.get(Calendar.DATE);
-		//int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-		//int startOfWeek = cal.get(Calendar.SUNDAY);
+		int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+		int startOfWeek = day - dayOfWeek+1;
+		int endOfWeek = startOfWeek + 6;
+		int daysInBetween = daysInMonth - endOfWeek;
 		
-		weekLabel.setText(cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US) + " " +
-				(day) + ", " + year + " - " + cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US) + " " + (day+6) + ", " + year);
+		if (startOfWeek <= 0 ){
+			startOfWeek = daysInMonth+startOfWeek;
+		}else if (endOfWeek > daysInMonth){
+			endOfWeek = startOfWeek+daysInBetween;
+		}
 		
+		weekLabel.setText(cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US) + ". " +
+				(startOfWeek) + ", " + year + " - " + cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US) + ". " + 
+				 endOfWeek+ ", " + year);
+
 		model.setRowCount(0);
-		
+
 	}
 
 }
