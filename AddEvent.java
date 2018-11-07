@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 
 public class AddEvent {
 
-	private JFrame frame;
+	JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -129,6 +129,9 @@ public class AddEvent {
 		btnAdd.setFont(new Font("Berlin Sans FB", Font.PLAIN, 14));
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+                            
+                            EventMain event = new EventMain();
+                            event.EventMain();
 			}
 		});
 		btnAdd.setBounds(300, 80, 140, 42);
