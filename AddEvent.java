@@ -130,11 +130,11 @@ public class AddEvent {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
                             
-                            EventMain event = new EventMain();
-                            event.EventMain();
+                           //EventMain event = new EventMain();
+                           //event.EventMain();
 			}
 		});
-		btnAdd.setBounds(300, 80, 140, 42);
+		btnAdd.setBounds(150, 80, 140, 42);
 		frame.getContentPane().add(btnAdd);
                 
                 
@@ -148,9 +148,37 @@ public class AddEvent {
                 frame.dispose();
 			}
 		});
-		btnBack.setBounds(520, 80, 140, 42);
+		btnBack.setBounds(350, 80, 140, 42);
 		frame.getContentPane().add(btnBack);
                 
          
+                
+                JButton eventReservation = new JButton("Reservation Room");
+		eventReservation.setFont(new Font("Berlin Sans FB", Font.PLAIN, 14));
+		eventReservation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+                            
+                           EventMain event = new EventMain();
+                           event.EventMain();
+                           
+			}
+		});
+		eventReservation.setBounds(550, 80, 140, 42);
+		frame.getContentPane().add(eventReservation);
+                
+                
+                JButton ContactList = new JButton("Contact List");
+		ContactList.setFont(new Font("Berlin Sans FB", Font.PLAIN, 14));
+		ContactList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+                            
+                           //EventMain event = new EventMain();
+                           //event.EventMain();
+                           
+			}
+		});
+		ContactList.setBounds(750, 80, 140, 42);
+		frame.getContentPane().add(ContactList);
+                
 	}
 }
