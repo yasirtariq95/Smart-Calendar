@@ -53,7 +53,7 @@ public class CalendarMonthly {
 		frame.setSize(1000,700);
 		frame.setVisible(true);
 
-		String [] columns = {"Sunday","Monday","Tueday","Wednesday","Thursday","Friday","Saturday"};
+		String [] columns = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
 		frame.getContentPane().setLayout(null);
 
 		monthLabel = new JLabel();
@@ -133,7 +133,7 @@ public class CalendarMonthly {
 		chckbxMonthly.setSelected(true);
 		chckbxMonthly.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
 		frame.getContentPane().add(chckbxMonthly);
-		
+
 
 		JCheckBox chckbxWeekly = new JCheckBox("Weekly");
 		buttonGroup.add(chckbxWeekly);
@@ -148,7 +148,7 @@ public class CalendarMonthly {
 				};
 			}
 		});
-		
+
 
 		JCheckBox chckbxDaily = new JCheckBox("Daily");
 		buttonGroup.add(chckbxDaily);
@@ -168,6 +168,7 @@ public class CalendarMonthly {
 
 
 	void updateMonth() {	
+		Calendar cal2 = new GregorianCalendar();
 		int year = cal.get(Calendar.YEAR);
 		monthLabel.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " " + year);
 
@@ -182,14 +183,20 @@ public class CalendarMonthly {
 		int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
 		for(int x = 6+ dayOfWeek, day = 1; day <= daysInMonth; x++, day++){
+
 			dayButton[x].setText("" + day);
-			dayButton[x].setBackground(Color.white);
+			
+			if (day == cal2.get(Calendar.DATE) && month == cal2.get(Calendar.MONTH) && year == cal2.get(Calendar.YEAR)) {	// Current Day
+				dayButton[x].setBackground(new Color(51,153,255));
+			}else {
+				dayButton[x].setBackground(Color.white);
+			}
 		}
 	}
 
 
 	public void CalendarMonthly() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
