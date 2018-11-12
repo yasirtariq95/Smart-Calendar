@@ -220,7 +220,10 @@ public class ContactList extends javax.swing.JFrame {
     }                                        
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        int selectedIndex = jList1.getSelectedIndex();
+        if (selectedIndex != -1) {
+            mod.remove(selectedIndex);
+        }
     }                                        
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
