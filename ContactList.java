@@ -213,7 +213,7 @@ public class ContactList extends javax.swing.JFrame {
         String message = "The input <"+jTextField1.getText()+"> is Successfully Added!";
         
         jList1.setModel(mod);
-        mod.addElement(jTextField1.getText().trim());
+        mod.addElement(jTextField1.getText().trim() +", " +jTextField2.getText().trim() +", " +jTextField3.getText().trim());
          
          
 
