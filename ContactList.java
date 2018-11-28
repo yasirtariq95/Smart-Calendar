@@ -66,9 +66,40 @@ public class ContactList extends javax.swing.JFrame {
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+               	 String name = jTextField1.getText();
+              	 String phone = jTextField2.getText();
+              	 String email = jTextField3.getText();
+
+
+                    if(name.equals(""))
+                    {
+                       JOptionPane.showMessageDialog(null, "Add A Name");
+                    } 
+                    
+                    PreparedStatement ps;
+                    String query = "INSERT INTO Contacts (Name,Phone,Email) VALUES(?,?,?)"; 
+               	 
+
+                    try {
+                        ps = dbconnection.getConnection().prepareStatement(query);
+
+                        ps.setString(1, name);
+                        ps.setString(2, phone);
+                        ps.setString(3, email);
+                        
+                        if(ps.executeUpdate() > 0)
+                        {
+                            JOptionPane.showMessageDialog(null, "Name, Phone and Email Added");
+                        }
+                    }catch (SQLException ex) {
+                        Logger.getLogger(CalendarRegistration.class.getName()).log(Level.SEVERE, null, ex);
+                    } 
+                    jButton1ActionPerformed(evt);
+
+               }
             }
-        });
+        
+        );
 
         jButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton2.setText("Delete");
@@ -258,7 +289,6 @@ public class ContactList extends javax.swing.JFrame {
     }                                           
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {           
-   	 
    	  String phone = jTextField1.getText();
    	  
      if(phone.equals(""))
