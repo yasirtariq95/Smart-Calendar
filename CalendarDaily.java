@@ -23,10 +23,13 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 public class CalendarDaily {
-	DefaultTableModel model;
 	Calendar cal = new GregorianCalendar();
+	int month = Calendar.getInstance().get(Calendar.MONTH);
+	int year = Calendar.getInstance().get(Calendar.YEAR);
 	JLabel dayLabel;
 	int day = Calendar.getInstance().get(Calendar.DATE);
+	JButton dayButton = new JButton();
+	JPanel p1 = new JPanel(new GridLayout(1, 1));
 
 	private JFrame frame;
 
@@ -63,28 +66,8 @@ public class CalendarDaily {
 		frame.setTitle("Personal Calendar");
 		frame.setSize(1000,700);
 		frame.setVisible(true);
-
-
-		String [] columns = {"Time" ,"Events"};
-		String [][] rows = {{"12 am"},{ "1 am"}, {"2 am"}, {"3 am"}, {"4 am"}, {"5 am"}, {"6 am"}, {"7 am"}, {"8 am"}, {"9 am"}, {"10 am"}, {"11 am"},
-				{"12 pm"},{ "1 pm"}, {"2 pm"}, {"3 pm"}, {"4 pm"}, {"5 pm"}, {"6 pm"}, {"7 pm"}, {"8 pm"}, {"9 pm"}, {"10 pm"}, {"11 pm"}
-		};
-
-		model = new DefaultTableModel(rows,columns);
-		JTable table = new JTable(model);
-		table.setEnabled(false);
-		table.setRowSelectionAllowed(false);
-		table.setSurrendersFocusOnKeystroke(true);
-		table.setIntercellSpacing(new Dimension(1, 1));
-		table.setFillsViewportHeight(true);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setFont(new Font("Berlin Sans FB", Font.PLAIN, 14));
-		JScrollPane pane = new JScrollPane(table);
-		pane.setBounds(94, 121, 788, 350);
-		frame.getContentPane().add(pane);
-		table.setRowHeight(30);
-
 		frame.getContentPane().setLayout(null);
+		
 
 		dayLabel = new JLabel();
 		dayLabel.setBounds(146, 56, 692, 27);
@@ -93,11 +76,14 @@ public class CalendarDaily {
 		frame.getContentPane().add(dayLabel);
 		dayLabel.setFont(new Font("Berlin Sans FB", Font.PLAIN, 30));
 		dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-		JPanel p1 = new JPanel(new GridLayout(24, 1));
 		p1.setBounds(94, 121, 788, 350);
 		frame.getContentPane().add(p1);
 
+		dayButton = new JButton();
+		dayButton.setFocusPainted(false);
+		dayButton.setBackground(Color.white);
+		p1.add(dayButton);
+		
 		JButton prevDay = new JButton("<<");
 		prevDay.setBounds(59, 58, 56, 29);
 		frame.getContentPane().add(prevDay);
@@ -178,17 +164,37 @@ public class CalendarDaily {
 	}
 
 	private void updateDay() {
+		Calendar cal2 = new GregorianCalendar();
 		int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		int year = cal.get(Calendar.YEAR);
+		int eventMonth = dbconnection.getEventMonth();
+		int eventDay = dbconnection.getEventDay();
+		String eventName = dbconnection.getEventName();
+		String eventLoc = dbconnection.getEventLoc();
 
 		if (day <= 0 ){
 			day = daysInMonth;
-		}else if (day > daysInMonth){
+		}else if (day > daysInMonth ){
 			day = 1;
 		}
 
 		dayLabel.setText(cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US) + ", " + 
 				cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " " + day + ", " + year);
+		
+		dayButton.setVerticalAlignment(SwingConstants.TOP);
+		
+		if (eventMonth == month+1 && eventDay == day ) {
+			dayButton.setText("<html>" + day + "<br><br><br>" + "Event: " + eventName +
+					"<br><br>" + "Location: " + eventLoc);
+		} else {
+			dayButton.setText("" + day);
+		}
+				
+		if (day == cal2.get(Calendar.DATE) && month == cal2.get(Calendar.MONTH) && year == cal2.get(Calendar.YEAR)) {	// Current Day
+			dayButton.setBackground(new Color(51,153,255));
+		}else {
+			dayButton.setBackground(Color.white);
+		}
 	}
 
 	public void CalendarDaily() {
