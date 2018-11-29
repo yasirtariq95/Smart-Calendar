@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -7,15 +8,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -174,11 +182,14 @@ public class CalendarWeekly {
 		int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 		int dayOfWeek2 = day - dayOfWeek+1;
+		int eventMonth = dbconnection.getEventMonth();
+		int eventDay = dbconnection.getEventDay();
+		String eventName = dbconnection.getEventName();
+		String eventLoc = dbconnection.getEventLoc();
 
 		monthLabel.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " " + year);
 
 		String [] columns = {"Sun.","Mon.","Tue.","Wed.","Thu.","Fri.","Sat."};
-
 
 		for(int x = 0; x < dayButton.length; x++) {
 
@@ -191,8 +202,15 @@ public class CalendarWeekly {
 			}
 
 			dayButton[x].setVerticalAlignment(SwingConstants.TOP);
-			dayButton[x].setText(columns[x] + " " + dayOfWeek2);
-
+			
+			// If there is an event
+			if (eventMonth == month+1 && eventDay == dayOfWeek2 ) {
+				dayButton[x].setText("<html>" + columns[x] + " " + dayOfWeek2 + "<br><br><br>" + "Event: " + eventName +
+						"<br><br>" + "Location: " + eventLoc);
+			} else {
+				dayButton[x].setText("<html>" + columns[x] + " " + dayOfWeek2);
+			}
+			
 			if (dayOfWeek2 == cal2.get(Calendar.DATE) && cal.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) 
 					&& cal.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)) {	// Current Day
 				dayButton[x].setBackground(new Color(51,153,255));
@@ -200,8 +218,9 @@ public class CalendarWeekly {
 				dayButton[x].setBackground(Color.white);
 			}
 
-			dayOfWeek2++;
-		}
+
+			dayOfWeek2++;	 
+		}	
 	}
 
 	public void CalendarWeekly() {
