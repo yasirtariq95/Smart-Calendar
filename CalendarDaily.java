@@ -36,7 +36,7 @@ public class CalendarDaily {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main (String [] args){
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -137,6 +137,7 @@ public class CalendarDaily {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
 					CalendarMonthly monthly = new CalendarMonthly();
 					monthly.CalendarMonthly();
+					frame.setVisible(false);
 				};
 			}
 		});
@@ -150,6 +151,7 @@ public class CalendarDaily {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
 					CalendarWeekly weekly = new CalendarWeekly();
 					weekly.CalendarWeekly();
+					frame.setVisible(false);
 				};
 			}
 		});
