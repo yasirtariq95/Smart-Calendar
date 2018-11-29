@@ -1,6 +1,14 @@
+package calendar;
+
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -11,14 +19,14 @@ public class CalendarMonthly {
 	JPanel p1 = new JPanel(new GridLayout(7, 7));
 	int month = Calendar.getInstance().get(Calendar.MONTH);
 	int year = Calendar.getInstance().get(Calendar.YEAR);
-	JFrame frame;
+	private JFrame frame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[]args) {
+	public static void main (String [] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -53,7 +61,7 @@ public class CalendarMonthly {
 		frame.setSize(1000,700);
 		frame.setVisible(true);
 
-		String [] columns = {"Sunday","Monday","Tueday","Wednesday","Thursday","Friday","Saturday"};
+		String [] columns = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
 		frame.getContentPane().setLayout(null);
 
 		monthLabel = new JLabel();
@@ -64,7 +72,7 @@ public class CalendarMonthly {
 		monthLabel.setFont(new Font("Berlin Sans FB", Font.PLAIN, 30));
 		monthLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JPanel p1 = new JPanel(new GridLayout(7, 7));
+	
 		p1.setBounds(94, 121, 788, 350);
 		frame.getContentPane().add(p1);
 
@@ -82,18 +90,8 @@ public class CalendarMonthly {
 			}
 
 			p1.add(dayButton[x]);
-                        
-                        
-                          dayButton[x].addActionListener(new ActionListener(){
-                    public void actionPerformed(ActionEvent ae) {
-                        
-                        
-                    }
-                });
 		}
 
-              
-                
 		JButton prevMonth = new JButton("<<");
 		prevMonth.setBounds(59, 58, 56, 29);
 		frame.getContentPane().add(prevMonth);
@@ -143,7 +141,7 @@ public class CalendarMonthly {
 		chckbxMonthly.setSelected(true);
 		chckbxMonthly.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
 		frame.getContentPane().add(chckbxMonthly);
-		
+
 
 		JCheckBox chckbxWeekly = new JCheckBox("Weekly");
 		buttonGroup.add(chckbxWeekly);
@@ -158,7 +156,7 @@ public class CalendarMonthly {
 				};
 			}
 		});
-		
+
 
 		JCheckBox chckbxDaily = new JCheckBox("Daily");
 		buttonGroup.add(chckbxDaily);
@@ -178,67 +176,41 @@ public class CalendarMonthly {
 
 
 	void updateMonth() {	
-		
-            		Calendar cal2 = new GregorianCalendar();
+		Calendar cal2 = new GregorianCalendar();
 		int year = cal.get(Calendar.YEAR);
-		int day = cal.get(Calendar.DATE);
-		int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-		int dayOfWeek2 = day - dayOfWeek+1;
+		monthLabel.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " " + year);
 		int eventMonth = dbconnection.getEventMonth();
 		int eventDay = dbconnection.getEventDay();
-                int dayInMonth = cal.get(Calendar.DAY_OF_MONTH);
-		String eventName = dbconnection.getEventName();
-		String eventLoc = dbconnection.getEventLoc();
-                
-        
-		monthLabel.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " " + year);
 
 		for(int x = 7; x < dayButton.length; x++) {
 			dayButton[x].setText("");
-                        
-                if (eventMonth <= 0 ){
-				day = daysInMonth;
-			} else 
-                {
-                            day = daysInMonth;
-                }
-                
-                }
-                
+		}
+
 		Calendar cal = Calendar.getInstance();
 		cal.set(year, month, 1);
 
+		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+		int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-		for(int x = 6+ dayOfWeek, day1 = 1; day1 <= daysInMonth; x++, day1++){
-			dayButton[x].setText("" + day1);
-			dayButton[x].setBackground(Color.white);
-                        
-                        dayButton[x].setVerticalAlignment(SwingConstants.TOP);
-                        
-                        
-                        if (eventMonth == month+1 && eventDay == dayInMonth ) {
-			dayButton[x].setText("<html>" + day1 + "<br><br><br>" + "Event: " + eventName +
-					"<br><br>" + "Location: " + eventLoc);
-		} else {
-			dayButton[x].setText("" + day1);
-		}
-
-                        
-                        if (day1 == cal2.get(Calendar.DATE) && month == cal2.get(Calendar.MONTH) && year == cal2.get(Calendar.YEAR)) {	// Current Day
+		for(int x = 6+ dayOfWeek, day = 1; day <= daysInMonth; x++, day++){
 			
+			if (eventMonth == month+1 && eventDay == day ) {
+				dayButton[x].setText("<html>" + day + "<br><br><br>" + "*");
+			} else {
+				dayButton[x].setText("" + day);
+			}
+			
+			if (day == cal2.get(Calendar.DATE) && month == cal2.get(Calendar.MONTH) && year == cal2.get(Calendar.YEAR)) {	// Current Day
 				dayButton[x].setBackground(new Color(51,153,255));
 			}else {
 				dayButton[x].setBackground(Color.white);
 			}
-                        
 		}
-                
 	}
 
 
 	public void CalendarMonthly() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
