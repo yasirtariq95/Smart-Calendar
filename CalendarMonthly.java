@@ -1,6 +1,12 @@
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -18,7 +24,7 @@ public class CalendarMonthly {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[]args) {
+	public static void main (String [] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -64,7 +70,7 @@ public class CalendarMonthly {
 		monthLabel.setFont(new Font("Berlin Sans FB", Font.PLAIN, 30));
 		monthLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JPanel p1 = new JPanel(new GridLayout(7, 7));
+	
 		p1.setBounds(94, 121, 788, 350);
 		frame.getContentPane().add(p1);
 
@@ -171,6 +177,8 @@ public class CalendarMonthly {
 		Calendar cal2 = new GregorianCalendar();
 		int year = cal.get(Calendar.YEAR);
 		monthLabel.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " " + year);
+		int eventMonth = dbconnection.getEventMonth();
+		int eventDay = dbconnection.getEventDay();
 
 		for(int x = 7; x < dayButton.length; x++) {
 			dayButton[x].setText("");
@@ -183,8 +191,12 @@ public class CalendarMonthly {
 		int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
 		for(int x = 6+ dayOfWeek, day = 1; day <= daysInMonth; x++, day++){
-
-			dayButton[x].setText("" + day);
+			
+			if (eventMonth == month+1 && eventDay == day ) {
+				dayButton[x].setText("<html>" + day + "<br><br><br>" + "*");
+			} else {
+				dayButton[x].setText("" + day);
+			}
 			
 			if (day == cal2.get(Calendar.DATE) && month == cal2.get(Calendar.MONTH) && year == cal2.get(Calendar.YEAR)) {	// Current Day
 				dayButton[x].setBackground(new Color(51,153,255));
