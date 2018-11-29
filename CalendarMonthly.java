@@ -139,6 +139,7 @@ public class CalendarMonthly {
 		chckbxMonthly.setSelected(true);
 		chckbxMonthly.setFont(new Font("Berlin Sans FB", Font.PLAIN, 20));
 		frame.getContentPane().add(chckbxMonthly);
+		
 
 
 		JCheckBox chckbxWeekly = new JCheckBox("Weekly");
@@ -151,6 +152,7 @@ public class CalendarMonthly {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
 					CalendarWeekly weekly = new CalendarWeekly();
 					weekly.CalendarWeekly();
+					frame.setVisible(false);
 				};
 			}
 		});
@@ -166,6 +168,7 @@ public class CalendarMonthly {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
 					CalendarDaily daily = new CalendarDaily();
 					daily.CalendarDaily();
+					frame.setVisible(false);
 				};
 			}
 		});
