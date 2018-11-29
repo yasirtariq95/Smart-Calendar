@@ -14,8 +14,14 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class AddEvent {
@@ -160,6 +166,30 @@ public class AddEvent {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
                             
+                            String ename = eventTitle.getText();
+                            String loc = eventLocation.getText();
+                           /**
+                            if(checkEvents(ename))
+                            {
+                                JOptionPane.showMessageDialog(null, "This location ");
+                            }**/
+                            
+                            PreparedStatement ps;
+                            String query = "INSERT INTO Events (EventName,Location) VALUES(?,?)";
+                            
+                            try {
+                                ps = dbconnection.getConnection().prepareStatement(query);
+            
+                                ps.setString(1, ename);
+                                ps.setString(2, loc);
+                                
+                                if(ps.executeUpdate() > 0)
+                                {
+                                    JOptionPane.showMessageDialog(null, "Event Added");
+                                }
+                            }catch (SQLException ex) {
+                                Logger.getLogger(CalendarRegistration.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                            //EventMain event = new EventMain();
                            //event.EventMain();
 			}
@@ -200,8 +230,8 @@ public class AddEvent {
 		eventReservation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
                             
-                          EventMain event  = new EventMain();
-                           event.EventMain();
+                          //EventMain event  = new EventMain();
+                          // event.EventMain();
                            
 			}
 		});
@@ -223,4 +253,26 @@ public class AddEvent {
 		frame.getContentPane().add(ContactList);
                 
 	}
+        /**public boolean checkEvents(String username)
+    {
+        PreparedStatement ps;
+        ResultSet rs;
+        boolean checkEvent = false;
+        String query = "SELECT * FROM Events WHERE Location =?";
+        
+        try {
+            ps = dbconnection.getConnection().prepareStatement(query);
+            ps.setString(1, username);
+            
+            rs = ps.executeQuery();
+            
+            if(rs.next())
+            {
+                checkEvent = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CalendarRegistration.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return checkEvent;
+    }**/
 }

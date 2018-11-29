@@ -1,10 +1,13 @@
-import net.aksingh.owmjapis.core.OWM;
-import net.aksingh.owmjapis.api.APIException;
-import net.aksingh.owmjapis.model.CurrentWeather;
-
+import java.text.DecimalFormat;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -17,22 +20,12 @@ public class CalendarMonthly {
 	int year = Calendar.getInstance().get(Calendar.YEAR);
 	private JFrame frame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private static boolean isRaining, isSnowing, isCloudy;
+	DecimalFormat df = new DecimalFormat("###0.0");
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[]args) throws APIException {
-		OWM owm = new OWM("4aabea27c4cde244047df5dac05c26e2");
-		CurrentWeather cwd = owm.currentWeatherByCityName("Atlanta");
-		if (cwd.hasRespCode() && cwd.getRespCode() == 200) {
-			if (cwd.hasRainData() == true)
-				isRaining = true;
-			if (cwd.hasSnowData() == true)
-				isSnowing = true;
-			if (cwd.hasCloudData() == true)
-				isCloudy = true;
-		}
+	public static void main (String [] args){
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -44,7 +37,6 @@ public class CalendarMonthly {
 			}
 		});
 	}
-
 
 	/**
 	 * Create the application.
@@ -78,7 +70,7 @@ public class CalendarMonthly {
 		monthLabel.setFont(new Font("Berlin Sans FB", Font.PLAIN, 30));
 		monthLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JPanel p1 = new JPanel(new GridLayout(7, 7));
+	
 		p1.setBounds(94, 121, 788, 350);
 		frame.getContentPane().add(p1);
 
@@ -159,6 +151,7 @@ public class CalendarMonthly {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
 					CalendarWeekly weekly = new CalendarWeekly();
 					weekly.CalendarWeekly();
+					frame.setVisible(false);
 				};
 			}
 		});
@@ -174,6 +167,7 @@ public class CalendarMonthly {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
 					CalendarDaily daily = new CalendarDaily();
 					daily.CalendarDaily();
+					frame.setVisible(false);
 				};
 			}
 		});
@@ -185,6 +179,8 @@ public class CalendarMonthly {
 		Calendar cal2 = new GregorianCalendar();
 		int year = cal.get(Calendar.YEAR);
 		monthLabel.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " " + year);
+		int eventMonth = dbconnection.getEventMonth();
+		int eventDay = dbconnection.getEventDay();
 
 		for(int x = 7; x < dayButton.length; x++) {
 			dayButton[x].setText("");
@@ -197,22 +193,25 @@ public class CalendarMonthly {
 		int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
 		for(int x = 6+ dayOfWeek, day = 1; day <= daysInMonth; x++, day++){
-
 			dayButton[x].setText("" + day);
 			
 			if (day == cal2.get(Calendar.DATE) && month == cal2.get(Calendar.MONTH) && year == cal2.get(Calendar.YEAR)) {	// Current Day
 				dayButton[x].setBackground(new Color(51,153,255));
-				if (isCloudy) {
-					dayButton[x].setIcon(new ImageIcon("C:\\Users\\Xander.IMPERATOR\\Documents\\Actual Documents\\Software Engineering\\MavenExample2\\src\\main\\resources\\AF1_J258.PNG"));
+				if (CalendarLogin.isCloudy()) {
+					dayButton[x].setIcon(new ImageIcon("C:\\Users\\Xander.IMPERATOR\\Documents\\Actual Documents\\Software Engineering\\MavenExample2\\src\\main\\resources\\Cloudy.PNG"));
 				}
-				if (isRaining) {
-					dayButton[x].setIcon(new ImageIcon("C:\\Users\\Xander.IMPERATOR\\Documents\\Actual Documents\\Software Engineering\\MavenExample2\\src\\main\\resources\\AF1_J695.PNG"));
+				else if (CalendarLogin.isRainy()) {
+					dayButton[x].setIcon(new ImageIcon("C:\\Users\\Xander.IMPERATOR\\Documents\\Actual Documents\\Software Engineering\\MavenExample2\\src\\main\\resources\\Rainy.PNG"));
 				}
-				if (isSnowing) {
-					dayButton[x].setIcon(new ImageIcon("C:\\Users\\Xander.IMPERATOR\\Documents\\Actual Documents\\Software Engineering\\MavenExample2\\src\\main\\resources\\AF1_J691.PNG"));
+				else if (CalendarLogin.isSnowy()) {
+					dayButton[x].setIcon(new ImageIcon("C:\\Users\\Xander.IMPERATOR\\Documents\\Actual Documents\\Software Engineering\\MavenExample2\\src\\main\\resources\\Snowy.PNG"));
+				}
+				else {
+					dayButton[x].setIcon(new ImageIcon("C:\\Users\\Xander.IMPERATOR\\Documents\\Actual Documents\\Software Engineering\\MavenExample2\\src\\main\\resources\\Sunny.PNG"));
 				}
 			}else {
 				dayButton[x].setBackground(Color.white);
+				dayButton[x].setIcon(null);
 			}
 		}
 	}

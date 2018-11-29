@@ -1,3 +1,7 @@
+import net.aksingh.owmjapis.api.APIException;
+import net.aksingh.owmjapis.core.OWM;
+import net.aksingh.owmjapis.model.CurrentWeather;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JFrame;
@@ -26,7 +30,8 @@ import javax.swing.JOptionPane;
  * @author Yasir
  */
 public class CalendarLogin extends javax.swing.JFrame {
-
+    private static boolean isRaining, isSnowing, isCloudy;
+    private static double minTemp, maxTemp;
     /**
      * Creates new form calendarLogin
      */
@@ -256,29 +261,19 @@ public class CalendarLogin extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CalendarLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CalendarLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CalendarLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CalendarLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    public static void main(String args[]) throws APIException {
+        OWM owm = new OWM("4aabea27c4cde244047df5dac05c26e2");
+        CurrentWeather cwd = owm.currentWeatherByCityName("Atlanta");
+        if (cwd.hasRespCode() && cwd.getRespCode() == 200) {
+            if (cwd.hasRainData() == true)
+                isRaining = true;
+            if (cwd.hasSnowData() == true)
+                isSnowing = true;
+            if (cwd.hasCloudData() == true)
+                isCloudy = true;
+            minTemp = ((cwd.getMainData().getTempMin() - 273.15) * 1.8 + 32);
+            maxTemp = ((cwd.getMainData().getTempMax() - 273.15) * 1.8 + 32);
         }
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -286,6 +281,25 @@ public class CalendarLogin extends javax.swing.JFrame {
                 new CalendarLogin().setVisible(true);
             }
         });
+    }
+    public static boolean isRainy(){
+        return isRaining;
+    }
+
+    public static boolean isSnowy(){
+        return isSnowing;
+    }
+
+    public static boolean isCloudy(){
+        return isCloudy;
+    }
+
+    public static double getMin(){
+        return minTemp;
+    }
+
+    public static double getMax(){
+        return maxTemp;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
