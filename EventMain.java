@@ -1,8 +1,3 @@
-/*
-*
- */
-package se_project;
-
 import java.awt.Color;
 import java.awt.EventQueue;
 
@@ -60,7 +55,7 @@ public class EventMain {
      
                  
                  
-		JLabel lblAddEvent = new JLabel("Reservation Room");
+		JLabel lblAddEvent = new JLabel("Room Reservation");
 		lblAddEvent.setBounds(350, 11, 500, 100);
 		lblAddEvent.setFont(new Font("Berlin Sans FB", Font.PLAIN, 35));
                 lblAddEvent.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,7 +131,7 @@ public class EventMain {
 		
 
   
-                JButton btnAdd = new JButton("Reservation");
+                JButton btnAdd = new JButton("Reserve");
 		btnAdd.setFont(new Font("Berlin Sans FB", Font.PLAIN, 14));
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
