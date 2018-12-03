@@ -168,6 +168,9 @@ public class AddEvent {
                             
                             String ename = eventTitle.getText();
                             String loc = eventLocation.getText();
+                            String month = eventStartMonth.getText();
+                            String day = eventStartDay.getText();
+                            
                            /**
                             if(checkEvents(ename))
                             {
@@ -182,6 +185,8 @@ public class AddEvent {
             
                                 ps.setString(1, ename);
                                 ps.setString(2, loc);
+                                ps.setString(2, month);
+                                ps.setString(2, day);
                                 
                                 if(ps.executeUpdate() > 0)
                                 {
@@ -225,7 +230,7 @@ public class AddEvent {
                 
          
                 
-                JButton eventReservation = new JButton("Reservation Room");
+                JButton eventReservation = new JButton("Room Reservation");
 		eventReservation.setFont(new Font("Berlin Sans FB", Font.PLAIN, 14));
 		eventReservation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -244,8 +249,8 @@ public class AddEvent {
 		ContactList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
                             
-                           //EventMain event = new EventMain();
-                           //event.EventMain();
+                           ContactList contactList = new ContactList();
+                           contactList.ContactList();
                            
 			}
 		});
