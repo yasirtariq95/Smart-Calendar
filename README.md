@@ -1,3 +1,4 @@
+# Smart Calendar
 A standalone application that shows all the upcoming events, geo location (using Google’s API) and
 weather (using Weather’s API) within the full monthly view.<br /> It reserves a room for you and save the information in the
 database about that particular room, so no one can access it until your meeting ends.<br /> It also saves contact information
